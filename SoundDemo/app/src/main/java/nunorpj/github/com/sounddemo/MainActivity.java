@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -62,6 +65,42 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+        final SeekBar progress = (SeekBar) findViewById(R.id.progress);
+
+
+
+
+        progress.setMax(mPlayer.getDuration());
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                progress.setProgress(mPlayer.getCurrentPosition());
+            }
+        },0,500);
+
+
+        progress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                    mPlayer.seekTo(i);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+
+        });
+
 
 
 
